@@ -3,14 +3,21 @@ from PIL import Image
 import os
 import glob
 
-path = "/home/roshanbalutmb/Documents/Perception Project/segmentation/semantic-segmentation-pytorch/"
-path_inp = path+"Input_images"
+path = "/home/roshanbalutmb/Documents/Perception Project/segmentation/semantic-segmentation-for-floorplan-generation/"
+#path_inp = path+"Input_images"
+path_inp = path+"rgb/rgb"
 path_resize = path+"Resized_images"
 #dirs = os.listdir( path )
 
+def convert_to_jpg():
+    for filename in glob.glob(path_resize+'/*.png'):
+        print("Running.....")
+        im = Image.open(filename)
+        rgb_im = im.convert('RGB')
+        rgb_im.save('{}{}{}'.format(path_resize,'/',os.path.split(filename.replace('.png','.jpg'))[1]))
 def resize_imgs():
     # change path to your path
-    for filename in glob.glob(path_inp+'/*.jpg'): #path of raw images
+    for filename in glob.glob(path_inp+'/*.png'): #path of raw images
         #print(filename)
         img = Image.open(filename).resize((525,600))
         #create directory if it doesn't exist
@@ -22,3 +29,4 @@ def resize_imgs():
 
 
 resize_imgs()
+convert_to_jpg()
